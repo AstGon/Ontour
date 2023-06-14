@@ -1,16 +1,16 @@
 @font-face {
   font-family: "AmsiPro-Black";
-  src: url("./asset/css/style.css/font/AmsiPro-Black");
+  src: url("{% static 'fonts/AmsiPro-Black.ttf' %}");
 }
 
 @font-face {
   font-family: "AmsiPro-Light";
-  src: url("./asset/css/style.css/font/AmsiPro-Light");
+  src: url("{% static 'fonts/AmsiPro-Light.ttf' %}");
 }
 
 @font-face {
   font-family: "AmsiPro-Regular";
-  src: url("./asset/css/style.css/font/AmsiPro-Regular");
+  src: url("{% static 'fonts/AmsiPro-Regular.ttf' %}");
 }
 
 body {
