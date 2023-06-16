@@ -9,13 +9,4 @@ document.addEventListener("DOMContentLoaded", function () {
   setTimeout(() => {
     mensajesArchivoDiv.classList.add("d-none");
   }, 3000);
-
-  function limpiarFormulario() {
-    $("#contrato").val("");
-    $("#archivo").val("");
-    $("#inputGroupSelect02").val("");
-  }
-
-  // Ejecutar la función al cargar la página
-  limpiarFormulario();
 });

@@ -74,3 +74,39 @@ def cargaArchivos(request):
     }
 
     return render(request, "modulos/cargaArchivos.html", context)
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import Contrato, Servicio
+
+
+def detalles(request):
+    if request.method == "POST":
+        numero_contrato = request.POST.get("contrato")
+        contrato = get_object_or_404(Contrato, id_contrato=numero_contrato)
+
+        servicio_hotel = Servicio.objects.filter(
+            contrato=contrato, tipo_servicio__nombre="Hotel"
+        ).first()
+        servicio_transporte = Servicio.objects.filter(
+            contrato=contrato, tipo_servicio__nombre="Transporte"
+        ).first()
+        servicio_alimentacion = Servicio.objects.filter(
+            contrato=contrato, tipo_servicio__nombre="Alimentación"
+        ).first()
+        servicio_entretencion = Servicio.objects.filter(
+            contrato=contrato, tipo_servicio__nombre="Entretención"
+        ).first()
+
+        context = {
+            "contrato": contrato,
+            "servicio_hotel": servicio_hotel,
+            "servicio_transporte": servicio_transporte,
+            "servicio_alimentacion": servicio_alimentacion,
+            "servicio_entretencion": servicio_entretencion,
+            "contrato_encontrado_valido": True,
+            "numero_contrato": numero_contrato,
+        }
+    else:
+        context = {"contrato_encontrado_valido": False}
+    return render(request, "detalles.html", context)
