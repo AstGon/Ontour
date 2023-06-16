@@ -11,6 +11,7 @@ def cargaArchivos(request):
     contrato_encontrado_valido = False
     contrato_mensaje = None
     mensaje_error = None
+    archivo_carga = None
 
     tipo_servicios = TipoServicio.objects.all()
 
@@ -28,6 +29,7 @@ def cargaArchivos(request):
         extension = archivo.name.split(".")[-1].lower()
         if extension in ["pdf", "jpg", "png"]:
             carpeta_archivos = "C:/Users/ASTRID/OneDrive/Desktop/archivos"
+            archivo_carga = True
 
             if not os.path.exists(carpeta_archivos):
                 os.makedirs(carpeta_archivos)
@@ -59,7 +61,7 @@ def cargaArchivos(request):
             nuevo_archivo.save()
 
         else:
-            mensaje_error = "Tipo de archivo no admitido. Por favor, cargue un archivo PDF, JPG o PNG."
+            archivo_carga = False
 
     context = {
         "numero_contrato": numero_contrato,
@@ -68,6 +70,7 @@ def cargaArchivos(request):
         "contrato_mensaje": contrato_mensaje,
         "tipo_servicios": tipo_servicios,
         "mensaje_error": mensaje_error,
+        "archivo_carga": archivo_carga,
     }
 
     return render(request, "modulos/cargaArchivos.html", context)

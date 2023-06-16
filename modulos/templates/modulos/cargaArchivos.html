@@ -88,36 +88,38 @@
 
         <!--SELECCIÓN Y CARGA DE ARCHIVO-->
         <div class="row  text-center">
-            <form method="post" enctype="multipart/form-data" action="{% url 'cargaArchivos' %}">
+            <form form id="formulario-archivo" method="post" enctype="multipart/form-data"
+                action="{% url 'cargaArchivos' %}">
                 {% csrf_token %}
                 <div class="input-group" style="max-width: 500px;">
                     <input type="file" class="form-control" name="archivo" id="archivo">
                 </div>
-                <p class="text-center" style="font-size: 11px;">Formato jpg, png o pdf</p>
+                <div>
+                    <p class="text-center" style="font-size: 11px;">Formato jpg, png o pdf</p>
+                </div>
+
 
                 <div class="d-grid gap-1 col-1 mx-auto">
                     <button class="btn btn-dark" type="submit">Cargar</button>
                 </div>
 
             </form>
-        </div>
 
-        <!-- Mensajes -->
-        {% if messages %}
-        <div class="container">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
+            <div id="mensajes-archivo" class="d-none">
+                {% if archivo_carga is not None %}
+                {% if archivo_carga %}
+                <p>Archivo cargado</p>
+                {% else %}
+                <p>Tipo de archivo no admitido. Por favor, cargue un archivo PDF, JPG o PNG.</p>
+                {% endif %}
+                {% endif %}
             </div>
-            {% endfor %}
         </div>
-        {% endif %}
 
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
+        <script src="{% static 'js/script.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+        </script>
 
 
 </body>
