@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +9,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" />
 
 
     <nav class="navbar bg-dark border-bottom border-bottom-dark" data-bs-theme="dark">
@@ -47,7 +45,7 @@
                                 autocomplete="off">
 
                             <label for="contrato">
-                                <button class="btn btn-dark btn-sm" type="submit" id="button-addon2" git
+                                <button class="btn btn-dark btn-sm" type="submit" id="button-addon2"
                                     onclick="buscarContratos()">Buscar</button>
                             </label>
                             <ul id="lista">
@@ -72,48 +70,54 @@
             </div>
         </div>
 
-
         <!--SELECCIÓN TIPO DE DOCUMENTO-->
-
         <div class="container">
             <div class="input-group mb-3 text-center" style="max-width: 200px;">
                 <h3 style="font-size: 17px;text-align: center;">Tipo de documento</h3>
                 <form>
-                    <select class="form-select text-align: center;" style="font-size: 15px;" id="inputGroupSelect02">
+                    <select class="form-select text-align: center;" style="font-size: 15px;" id="inputGroupSelect02"
+                        name="tipo_documento">
                         <option selected>Seleccionar</option>
-                        <option value="1">Seguro</option>
-                        <option value="2">Hotel</option>
-                        <option value="3">Transporte</option>
-                        <option value="4">Alimentación</option>
-                        <option value="5">Entretención</option>
+                        {% for tipo_servicio in tipo_servicios %}
+                        <option value="{{ tipo_servicio.id }}">{{ tipo_servicio.nombre }}</option>
+                        {% endfor %}
                     </select>
                 </form>
             </div>
         </div>
 
-
         <!--SELECCIÓN Y CARGA DE ARCHIVO-->
         <div class="row  text-center">
-            <div class="input-group" style="max-width: 500px;">
-                <input type="file" class="form-control" id="inputGroupFile02">
+            <form method="post" enctype="multipart/form-data" action="{% url 'cargaArchivos' %}">
+                {% csrf_token %}
+                <div class="input-group" style="max-width: 500px;">
+                    <input type="file" class="form-control" name="archivo" id="archivo">
+                </div>
+                <p class="text-center" style="font-size: 11px;">Formato jpg, png o pdf</p>
+
+                <div class="d-grid gap-1 col-1 mx-auto">
+                    <button class="btn btn-dark" type="submit">Cargar</button>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Mensajes -->
+        {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
             </div>
-            <p class="text-center" style="font-size: 11px;">Formato jpg, png o pdf</p>
+            {% endfor %}
         </div>
+        {% endif %}
 
-        <div class="d-grid gap-1 col-1 mx-auto">
-            <button class="btn btn-dark" type="button">Cargar</button>
-        </div>
+    </div>
 
-
-
-
-        <script src="{% static 'js/script.js' %}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-            integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous">
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+    </script>
 
 
 </body>
