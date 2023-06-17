@@ -6,7 +6,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Contrato, TipoServicio, Archivo
 
 
-
 def cargaArchivos(request):
     numero_contrato = request.POST.get("contrato", "").upper()
     contrato_encontrado = None
@@ -15,7 +14,6 @@ def cargaArchivos(request):
     contrato_mensaje = None
     mensaje_error = None
     archivo_carga = None
-
 
     tipo_servicios = TipoServicio.objects.all()
 
@@ -91,12 +89,10 @@ def cargaArchivos(request):
         "numero_contrato": numero_contrato,
         "contrato_encontrado": contrato_encontrado,
         "contrato_encontrado_valido": contrato_encontrado_valido,
-
         "contrato_mensaje": contrato_mensaje,
         "tipo_servicios": tipo_servicios,
         "mensaje_error": mensaje_error,
         "archivo_carga": archivo_carga,
-
     }
 
     return render(request, "modulos/cargaArchivos.html", context)
