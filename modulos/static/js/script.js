@@ -1,4 +1,11 @@
+window.onload = function () {
+  console.log("JavaScript conectado correctamente");
+};
 
+window.addEventListener("DOMContentLoaded", () => {
+  var contratoInput = document.getElementById("contrato");
+  contratoInput.value = "";
+});
 
 function cargarArchivo() {
   console.log("Función cargarArchivo() llamada."); // Agregar esta línea

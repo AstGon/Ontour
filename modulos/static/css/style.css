@@ -1,3 +1,39 @@
+@font-face {
+  font-family: "AmsiPro-Black";
+  src: url("{% static 'fonts/AmsiPro-Black.ttf' %}");
+}
+
+@font-face {
+  font-family: "AmsiPro-Light";
+  src: url("{% static 'fonts/AmsiPro-Light.ttf' %}");
+}
+
+@font-face {
+  font-family: "AmsiPro-Regular";
+  src: url("{% static 'fonts/AmsiPro-Regular.ttf' %}");
+}
+
+body {
+  margin: 20%;
+  font-family: "AmsiPro-Light", sans-serif;
+}
+
+h1 {
+  font-family: AmsiPro-Black, sans-serif;
+  align-items: center;
+}
+
+h2 {
+  font-family: "AmsiPro-Regular", sans-serif;
+}
+
+h3 {
+  font-family: "AmsiPro-Regular", sans-serif;
+}
+
+h4 {
+  font-family: "AmsiPro-Light", sans-serif;
+}
 
 .buscador {
   width: 10px;
