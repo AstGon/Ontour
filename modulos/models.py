@@ -12,7 +12,7 @@ class TipoServicio(models.Model):
 
 
 class Ejecutivo(models.Model):
-    id_ejecutivo = models.IntegerField(primary_key=True)
+    id_ejecutivo = models.AutoField(primary_key=True)
     nombre_eje = models.CharField(max_length=100)
     apellido_eje = models.CharField(max_length=100)
     email = models.EmailField()
@@ -38,8 +38,8 @@ class Contrato(models.Model):
 
 class Archivo(models.Model):
     id_archivo = models.AutoField(primary_key=True)
-    archivo = models.ForeignKey(
-        TipoArchivo, on_delete=models.CASCADE, null=True, blank=True
+    tipo_servicio = models.ForeignKey(
+        TipoServicio, on_delete=models.CASCADE, null=True, blank=True
     )
     descripcion = models.CharField(max_length=100)
     ruta = models.CharField(max_length=100)
@@ -49,11 +49,10 @@ class Archivo(models.Model):
 
 
 class Servicio(models.Model):
-    id_servicios = models.AutoField(primary_key=True)
-    servcio = models.ForeignKey(
+    id_servicio = models.AutoField(primary_key=True)
+    tipo_servicio = models.ForeignKey(
         TipoServicio, on_delete=models.CASCADE, null=True, blank=True
     )
-    descripcion = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
     contrato = models.ForeignKey(
         Contrato, on_delete=models.CASCADE, null=True, blank=True
