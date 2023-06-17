@@ -1,17 +1,21 @@
 import os
+
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Contrato, TipoServicio, Archivo
 
 
+
 def cargaArchivos(request):
-    numero_contrato = request.POST.get("contrato", "")
+    numero_contrato = request.POST.get("contrato", "").upper()
     contrato_encontrado = None
     contrato_encontrado_valido = False
+
     contrato_mensaje = None
     mensaje_error = None
     archivo_carga = None
+
 
     tipo_servicios = TipoServicio.objects.all()
 
@@ -63,14 +67,36 @@ def cargaArchivos(request):
         else:
             archivo_carga = False
 
+    if request.method == "POST" and request.FILES.get("archivo"):
+        archivo = request.FILES["archivo"]
+        descripcion = archivo.name
+        tipo = request.POST.get("tipo")
+        ruta_archivo = os.path.join(settings.ARCHIVOS_DIR, archivo.name)
+
+        # Guardar el archivo en el directorio de destino
+        with open(ruta_archivo, "wb") as f:
+            for chunk in archivo.chunks():
+                f.write(chunk)
+
+        # Crear una instancia del modelo Archivo y guardar en la base de datos
+        archivo_obj = Archivo(
+            descripcion=descripcion,
+            tipo=tipo,
+            contrato=contrato_encontrado,
+            ruta_archivo=ruta_archivo,
+        )
+        archivo_obj.save()
+
     context = {
         "numero_contrato": numero_contrato,
         "contrato_encontrado": contrato_encontrado,
         "contrato_encontrado_valido": contrato_encontrado_valido,
+
         "contrato_mensaje": contrato_mensaje,
         "tipo_servicios": tipo_servicios,
         "mensaje_error": mensaje_error,
         "archivo_carga": archivo_carga,
+
     }
 
     return render(request, "modulos/cargaArchivos.html", context)
