@@ -120,6 +120,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_ROOT = ([BASE_DIR / "static"],)
+STATIC_ROOT = "/Users/ASTRID/Ontour/modulos/static"
 
 
 # Default primary key field type

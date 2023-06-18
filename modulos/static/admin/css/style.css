@@ -1,0 +1,14 @@
+.buscador {
+  width: 10px;
+}
+
+.btn {
+  size: 5%;
+}
+
+.input-group {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
