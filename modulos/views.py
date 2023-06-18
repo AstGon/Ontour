@@ -65,26 +65,6 @@ def cargaArchivos(request):
         else:
             archivo_carga = False
 
-    if request.method == "POST" and request.FILES.get("archivo"):
-        archivo = request.FILES["archivo"]
-        descripcion = archivo.name
-        tipo = request.POST.get("tipo")
-        ruta_archivo = os.path.join(settings.ARCHIVOS_DIR, archivo.name)
-
-        # Guardar el archivo en el directorio de destino
-        with open(ruta_archivo, "wb") as f:
-            for chunk in archivo.chunks():
-                f.write(chunk)
-
-        # Crear una instancia del modelo Archivo y guardar en la base de datos
-        archivo_obj = Archivo(
-            descripcion=descripcion,
-            tipo=tipo,
-            contrato=contrato_encontrado,
-            ruta_archivo=ruta_archivo,
-        )
-        archivo_obj.save()
-
     context = {
         "numero_contrato": numero_contrato,
         "contrato_encontrado": contrato_encontrado,
