@@ -71,11 +71,10 @@
             <div class="container">
                 <div class="input-group mb-3 text-center" style="max-width: 200px;">
                     <h3 style="font-size: 17px;text-align: center;">Tipo de documento</h3>
-                    <form id="tipo_documento_form" action="{% url 'cargaArchivos' %}" method="post"
-                        onsubmit="submitTipoDocumento(event)">
+                    <form id="tipo_documento_form" action="{% url 'cargaArchivos' %}" method="post">
                         {% csrf_token %}
                         <select class="form-select text-align: center;" style="font-size: 15px;" id="tipo_documento"
-                            name="tipo_documento" onchange="obtenerSeleccionTipoDocumento()">
+                            name="tipo_documento" onchange="obtenerSeleccionTipoDocumento()" required>
 
                             <option selected>Seleccionar</option>
                             {% for tipo_servicio in tipo_servicios %}
@@ -92,7 +91,7 @@
             <!--SELECCIÓN Y CARGA DE ARCHIVO-->
             <div class="row text-center">
                 <form id="formulario-archivo" method="post" enctype="multipart/form-data"
-                    action="{% url 'cargaArchivos' %}">
+                    action="{% url 'cargaArchivos' %}" onsubmit="submitTipoDocumento(event)">
                     {% csrf_token %}
                     <input type="hidden" name="contrato" value="{{ contrato_encontrado.id_contrato }}">
                     <input type="hidden" id="tipo_documento_seleccionado" name="tipo_documento_seleccionado">

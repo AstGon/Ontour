@@ -39,3 +39,25 @@ function obtenerSeleccionTipoDocumento() {
   document.getElementById("tipo_documento_seleccionado").value =
     tipoServicioSeleccionado;
 }
+
+function submitTipoDocumento(event) {
+  event.preventDefault(); // Evitar que se envíe el formulario de manera predeterminada
+
+  var tipoDocumentoSelect = document.getElementById("tipo_documento");
+  var tipoDocumentoSeleccionado =
+    tipoDocumentoSelect.options[tipoDocumentoSelect.selectedIndex].dataset.id;
+
+  // Verificar si se ha seleccionado un tipo de documento
+  if (tipoDocumentoSeleccionado) {
+    // Asignar el valor al campo oculto
+    var tipoDocumentoSeleccionadoInput = document.getElementById(
+      "tipo_documento_seleccionado"
+    );
+    tipoDocumentoSeleccionadoInput.value = tipoDocumentoSeleccionado;
+
+    // Enviar el formulario
+    document.getElementById("formulario-archivo").submit();
+  } else {
+    alert("Por favor, selecciona un tipo de documento.");
+  }
+}
