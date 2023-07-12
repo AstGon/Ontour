@@ -50,14 +50,13 @@
                             </label>
                         </p>
                     </form>
+                    {% if busqueda_realizada %}
                     {% if contrato_encontrado_valido %}
-                    <p>Contrato encontrado</p>
-                    {% endif %}
-                    {% if not contrato_encontrado_valido and contrato_no_disponible %}
+                    <p>Contrato encontrado.</p> <!-- Contenido del contrato encontrado -->
+                    {% else %}
                     <p>No se encontró ningún contrato con el número ingresado.</p>
                     {% endif %}
-
-
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -82,7 +81,7 @@
                 <div class="card-body">
                     <label for="nomColegio" class="col-form-label small fw-bold">Nombre Colegio:</label>
                     <input type="text" readonly class="form-control-plaintext" id="nomColegio"
-                        value="{{ contrato.colegio }}">
+                        value="{{ contrato.institucion.nombre_colegio }}">
                 </div>
             </div>
         </div>
@@ -92,7 +91,7 @@
                 <div class="card-body">
                     <label for="curso" class="col-form-label small fw-bold">Curso:</label>
                     <input type="text" readonly class="form-control-plaintext" id="curso"
-                        value="{{ contrato.nombre_curso }}">
+                        value="{{ contrato.institucion.curso.nombre_curso }}">
                 </div>
             </div>
         </div>
@@ -102,7 +101,7 @@
                 <div class="card-body">
                     <label for="cantAlumn" class="col-form-label small fw-bold">Cantidad Alumnos:</label>
                     <input type="text" readonly class="form-control-plaintext" id="cantAlumn"
-                        value="{{ contrato.cant_alumnos }}">
+                        value="{{ contrato.institucion.curso.cant_alumnos }}">
                 </div>
             </div>
         </div>
@@ -112,7 +111,7 @@
                 <div class="card-body">
                     <label for="repLegal" class="col-form-label small fw-bold">Representante Legal:</label>
                     <input type="text" readonly class="form-control-plaintext" id="repLegal"
-                        value="{{ contrato.nombre_rep_legal }}">
+                        value="{{ contrato.representante_legal.nombre }}">
                 </div>
             </div>
         </div>
@@ -122,93 +121,127 @@
                 <div class="card-body">
                     <label for="rutRepL" class="col-form-label small fw-bold">Rut Representante:</label>
                     <input type="text" readonly class="form-control-plaintext" id="rutRepL"
-                        value="{{ contrato.rut_rep_legal }}">
+                        value="{{ contrato.representante_legal.rut }}">
                 </div>
             </div>
         </div>
 
-    </div>
-    {% endif %}
+        <div class="col-md-6 p-2">
+            <div class="card">
+                <div class="card-body">
+                    <label for="repLegal" class="col-form-label small fw-bold">Valor p/p:</label>
+                    <input type="text" readonly class="form-control-plaintext" id="repLegal"
+                        value="${{ contrato.precio|floatformat:2 }}">
+                </div>
+            </div>
+        </div>
 
-
-    <!--SERVICIOS-->
-
-    <div class="container mb-5">
-        <div class="titulo mb-5 mt-5  text-center">
-            <div class="row">
-                <h1>Servicios contratados</h1>
+        <div class="col-md-6 p-2">
+            <div class="card">
+                <div class="card-body">
+                    <label for="valorTotal" class="col-form-label small fw-bold">Valor Total:</label>
+                    <input type="text" readonly class="form-control-plaintext" id="valorTotal"
+                        value="${{ contrato.valor_total|floatformat:2 }}">
+                </div>
             </div>
         </div>
 
 
-        {% if contrato_encontrado_valido %}
-        <div class="container justify-content-center">
-            <div class="row justify-content-center">
 
-                <div class="col-md-3">
-                    <div class="card fixed-card">
-                        <div class="card-body bg-secondary text-center">
-                            <label for="hotelID" class="col-form-label fw-bold fs-5 text-white">Hotel</label>
-                            <hr>
-                            {% if servicio_hotel %}
-                            <p class="text-white">{{ servicio_hotel.descripcion }}</p>
-                            <!-- Agrega más detalles según tu modelo Servicio -->
-                            {% else %}
-                            <p class="text-white">No se encontró información del servicio de hotel.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card fixed-card">
-                        <div class="card-body bg-secondary text-center">
-                            <label for="hotelID" class="col-form-label fw-bold fs-5 text-white">Transporte</label>
-                            <hr>
-                            {% if servicio_transporte %}
-                            <p class="text-white">{{ servicio_transporte.descripcion }}</p>
-                            <!-- Agrega más detalles según tu modelo Servicio -->
-                            {% else %}
-                            <p class="text-white">No se encontró información del servicio de transporte.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card fixed-card">
-                        <div class="card-body bg-secondary text-center">
-                            <label for="hotelID" class="col-form-label fw-bold fs-5 text-white">Alimentación</label>
-                            <hr>
-                            {% if servicio_alimentacion %}
-                            <p class="text-white">{{ servicio_alimentacion.descripcion }}</p>
-                            <!-- Agrega más detalles según tu modelo Servicio -->
-                            {% else %}
-                            <p class="text-white">No se encontró información del servicio de alimentación.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card fixed-card">
-                        <div class="card-body bg-secondary text-center">
-                            <label for="hotelID" class="col-form-label fw-bold fs-5 text-white">Entretención</label>
-                            <hr>
-                            {% if servicio_entretencion %}
-                            <p class="text-white">{{ servicio_entretencion.descripcion }}</p>
-                            <!-- Agrega más detalles según tu modelo Servicio -->
-                            {% else %}
-                            <p class="text-white">No se encontró información del servicio de entretención.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
         {% endif %}
-    </div>
+
+
+        <!--SERVICIOS-->
+
+        <div class="container mb-5">
+            <div class="titulo mb-5 mt-5  text-center">
+                <div class="row">
+                    <h1>Servicios contratados</h1>
+                </div>
+            </div>
+
+
+            {% if contrato_encontrado_valido %}
+            <div class="container justify-content-center">
+                <div class="row justify-content-center">
+
+                    <div class="">
+                        <div class="card fixed-card">
+                            <div class="card-body bg-secondary text-center">
+                                <label for="hotelID" class="col-form-label fw-bold fs-5 text-white">Hotel</label>
+                                <hr>
+                                {% if servicio_hotel %}
+                                <p class="text-white">{{ servicio_hotel.descripcion }}</p>
+                                <!-- Agrega más detalles según tu modelo Servicio -->
+                                {% else %}
+                                <p class="text-white">No se encontró información del servicio de hotel.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="card fixed-card">
+                            <div class="card-body bg-secondary text-center">
+                                <label for="hotelID" class="col-form-label fw-bold fs-5 text-white">Transporte</label>
+                                <hr>
+                                {% if servicio_transporte %}
+                                <p class="text-white">{{ servicio_transporte.descripcion }}</p>
+                                <!-- Agrega más detalles según tu modelo Servicio -->
+                                {% else %}
+                                <p class="text-white">No se encontró información del servicio de transporte.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="card fixed-card">
+                            <div class="card-body bg-secondary text-center">
+                                <label for="hotelID" class="col-form-label fw-bold fs-5 text-white">Alimentación</label>
+                                <hr>
+                                {% if servicio_alimentacion %}
+                                <p class="text-white">{{ servicio_alimentacion.descripcion }}</p>
+                                <!-- Agrega más detalles según tu modelo Servicio -->
+                                {% else %}
+                                <p class="text-white">No se encontró información del servicio de alimentación.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="card fixed-card">
+                            <div class="card-body bg-secondary text-center">
+                                <label for="hotelID" class="col-form-label fw-bold fs-5 text-white">Entretención</label>
+                                <hr>
+                                {% if servicio_entretencion %}
+                                <p class="text-white">{{ servicio_entretencion.descripcion }}</p>
+                                <!-- Agrega más detalles según tu modelo Servicio -->
+                                {% else %}
+                                <p class="text-white">No se encontró información del servicio de entretención.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="card fixed-card">
+                            <div class="card-body bg-secondary text-center">
+                                <label for="hotelID" class="col-form-label fw-bold fs-5 text-white">Seguro</label>
+                                <hr>
+                                {% if servicio_seguro %}
+                                <p class="text-white">{{ servicio_seguro.descripcion }}</p>
+                                <!-- Agrega más detalles según tu modelo Servicio -->
+                                {% else %}
+                                <p class="text-white">No se encontró información del servicio de entretención.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
 
     </div>
 

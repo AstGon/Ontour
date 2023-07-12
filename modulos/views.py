@@ -99,6 +99,7 @@ def detalles(request):
         numero_contrato = request.POST.get("contrato").upper()
         contrato = None
         contrato_no_disponible = False
+        busqueda_realizada = True
 
         if numero_contrato:
             try:
@@ -114,10 +115,13 @@ def detalles(request):
                 contrato=contrato, tipo_servicio__nombre="Transporte"
             ).first()
             servicio_alimentacion = Servicio.objects.filter(
-                contrato=contrato, tipo_servicio__nombre="Alimentación"
+                contrato=contrato, tipo_servicio__nombre="Alimentacion"
             ).first()
             servicio_entretencion = Servicio.objects.filter(
-                contrato=contrato, tipo_servicio__nombre="Entretención"
+                contrato=contrato, tipo_servicio__nombre="Actividades"
+            ).first()
+            servicio_seguro = Servicio.objects.filter(
+                contrato=contrato, tipo_servicio__nombre="Seguro"
             ).first()
 
             context = {
@@ -126,12 +130,18 @@ def detalles(request):
                 "servicio_transporte": servicio_transporte,
                 "servicio_alimentacion": servicio_alimentacion,
                 "servicio_entretencion": servicio_entretencion,
+                "servicio_seguro": servicio_seguro,
                 "contrato_encontrado_valido": True,
                 "numero_contrato": numero_contrato,
                 "contrato_no_disponible": contrato_no_disponible,
+                "busqueda_realizada": busqueda_realizada,
             }
         else:
-            context = {"contrato_encontrado_valido": False}
+            context = {
+                "contrato_encontrado_valido": False,
+                "contrato_no_disponible": contrato_no_disponible,
+                "busqueda_realizada": busqueda_realizada,
+            }
 
         return render(request, "detalles.html", context)
 

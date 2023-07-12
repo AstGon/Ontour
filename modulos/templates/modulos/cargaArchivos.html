@@ -47,7 +47,7 @@
                             <ul id="lista">
                                 {% for contrato in contratos %}
                                 {% if contrato.id_contrato == numero_contrato %}
-                                <li>{{ contrato.id_contrato }} - {{ contrato.nombre_curso }}</li>
+                                <li>{{ contrato.id_contrato }} - {{ contrato.institucion.curso.nombre_curso }}</li>
                                 {% endif %}
                                 {% endfor %}
                             </ul>
@@ -55,8 +55,7 @@
                     </form>
                     <div id="mensajes-contrato">
                         {% if contrato_encontrado_valido %}
-                        <p>Ingrese los documentos para el contrato {{ contrato_encontrado.id_contrato }} -
-                            {{ contrato_encontrado.nombre_curso }}.</p>
+                        <p>Ingrese los documentos para el contrato {{ contrato_encontrado.id_contrato }}</p>
                         {% endif %}
                         {% if numero_contrato and not contrato_encontrado_valido %}
                         <p>No se encontró ningún contrato con el número ingresado.</p>

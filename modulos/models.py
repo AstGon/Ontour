@@ -19,15 +19,33 @@ class Ejecutivo(models.Model):
     telefono = models.IntegerField()
 
 
+class RepresentanteLegal(models.Model):
+    rut = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
+
+
+class Curso(models.Model):
+    nombre_curso = models.CharField(max_length=100)
+    cant_alumnos = models.IntegerField()
+
+
+class Institucion(models.Model):
+    nombre_colegio = models.CharField(max_length=100)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+
+
 class Contrato(models.Model):
     id_contrato = models.CharField(max_length=100, primary_key=True)
     fecha_contrato = models.DateField()
-    nombre_curso = models.CharField(max_length=100)
-    cant_alumnos = models.IntegerField()
-    colegio = models.CharField(max_length=100)
-    rut_rep_legal = models.CharField(max_length=100)
-    nombre_rep_legal = models.CharField(max_length=100)
+    institucion = models.ForeignKey(Institucion, on_delete=models.CASCADE)
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
+    representante_legal = models.ForeignKey(
+        RepresentanteLegal, on_delete=models.CASCADE
+    )
     ejecutivo = models.ForeignKey(Ejecutivo, on_delete=models.CASCADE)
+
+    def valor_total(self):
+        return self.precio * self.institucion.curso.cant_alumnos
 
     def add_service(self, servicio):
         self.servicios.add(servicio)
